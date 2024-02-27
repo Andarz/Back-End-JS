@@ -1,0 +1,41 @@
+function shop(products) {
+    let endIndex = parseInt(products[0]) + 1
+    let fruitsArr = products.slice(1, endIndex)
+    let commands = products.slice(endIndex)
+
+    for (let i = 0; i < commands.length; i++) {
+        if (commands[i] === 'Sell') {
+            let soldProduct = fruitsArr.shift()
+            console.log(`${soldProduct} product sold!`)
+        }
+        else if (commands[i].startsWith('Add')) {
+            let addCommand = commands[i].split(' ')
+            let fruitToAdd = addCommand[1]
+            fruitsArr.push(fruitToAdd)
+        }
+        else if (commands[i].startsWith('Swap')) {
+            let swapCommand = commands[i].split(' ')
+            let startIndexToSwap = parseInt(swapCommand[1])
+            let endIndexToSwap = parseInt(swapCommand[2])
+
+            let temp = fruitsArr[startIndexToSwap]
+            fruitsArr[startIndexToSwap] = fruitsArr[endIndexToSwap]
+            fruitsArr[endIndexToSwap] = temp
+            //[fruitsArr[startIndexToSwap], fruitsArr[endIndexToSwap]] = [fruitsArr[endIndexToSwap], fruitsArr[startIndexToSwap]]
+            console.log('Swapped!');
+        }
+        if (commands[i] === 'End' && fruitsArr.length > 0) {
+            console.log(`Products left: ${fruitsArr.join(', ')}`)
+            break
+        }
+        else if (commands[i] === 'End' && fruitsArr.length === 0) {
+            console.log('The shop is empty')
+            break
+        }
+    }
+
+}
+
+//shop(['5', 'Milk', 'Eggs', 'Bread', 'Cheese', 'Butter', 'Add Yogurt', 'Swap 1 4', 'End'])
+//shop(['3', 'Apple', 'Banana', 'Orange', 'Sell', 'End', 'Swap 0 1'])
+shop(['3', 'Shampoo', 'Soap', 'Toothpaste', 'Sell', 'Sell', 'Sell', 'End'])
